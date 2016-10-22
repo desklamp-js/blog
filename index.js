@@ -1,13 +1,20 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { Router, Route, hashHistory } from 'react-router';
-import { Home, Page2, Page1 } from './components';
+import { Router, Route, IndexRoute } from 'react-router';
+import { Page2, Page1, Root } from './components';
+
+import { Provider } from 'react-redux';
+import { store, history } from './store';
+import ReduxHome from './ReduxHome';
 
 ReactDom.render((
-  <Router history={hashHistory}>
-    <Route path="/" component={Home} />
-    <Route path="page1" component={Page1} />
-    <Route path="page2/:user" component={Page2} />
-    <Route path="*" component={Home} />
-  </Router>
+  <Provider store={store}>
+    <Router history={history}>
+      <Route path="/" component={ReduxHome}>
+        <IndexRoute component={Root} />
+        <Route path="/page1" component={Page1} />
+        <Route path="/page2" component={Page2} />
+      </Route>
+    </Router>
+  </Provider>
 ), document.getElementById('app'));

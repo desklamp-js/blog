@@ -13,20 +13,35 @@ function InputName({ onclick, User }) {
   );
 }
 
-function Home() {
+function Root() {
   return (
     <div>
-      <h1>Home</h1>
-      <ul>
-        <li><Link to="/home">Home</Link></li>
-        <li><Link to="/page1">Page 1</Link></li>
-      </ul>
-      <p>Hello and Welcome to the Demo</p>
+      <h1>Root it!</h1>
     </div>
   );
 }
 
-function Page2({ params }) {
+class Home extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    console.log('home props', this.props);
+    return (
+      <div>
+        <ul>
+          <li><Link to="/home">Home</Link></li>
+          <li><Link to="/page1">Page 1</Link></li>
+        </ul>
+        <div>Welcome to the home demo</div>
+        {React.cloneElement(this.props.children, this.props)}
+      </div>
+    );
+  }
+}
+
+ export function Page2({ params }) {
   return (
     <div>
       <ul>
@@ -42,18 +57,20 @@ function Page2({ params }) {
 class Page1 extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      UserName: '',
-    };
     this.updateUser = this.updateUser.bind(this);
   }
 
   updateUser(e) {
     const event = e.nativeEvent;
     const newUser = event.target[0].value;
-    const newState = Object.assign({}, this.state, { UserName: newUser });
-    this.setState(newState);
-    this.props.history.push(`/page2/${newUser}`);
+    // const newState = Object.assign({}, this.state, { UserName: newUser });
+    // this.setState(newState);
+
+    // call updateUsername action passed down from Reux.
+    // this.props.updateUsername(newUser);
+
+    //go to next page
+    // this.props.history.push(`/page2/${newUser}`);
   }
 
   render() {
@@ -62,10 +79,12 @@ class Page1 extends React.Component {
         <ul>
           <li><Link to="/home">Home</Link></li>
         </ul>
-        <InputName onclick={this.updateUser} User={this.state.UserName} />
+        <InputName onclick={this.updateUser} />
       </div>
     );
   }
 }
+        //
+        // <InputName onclick={this.updateUser} User={this.state.UserName} />
 
-module.exports = { Home, InputName, Page2, Page1 };
+module.exports = { Home, InputName, Page2, Page1, Root };
