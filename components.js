@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-function InputName({ onclick, User }) {
+function InputName({ updateUserName, User }) {
   return (
     <div>
-      <form onSubmit={(e) => { e.preventDefault(); onclick(e); }}>
+      <form onSubmit={(e) => { e.preventDefault(); updateUserName(e) }}>
         <input type="text" placeholder="Enter your Name" />
         <button type="submit">Submit</button>
       </form>
@@ -41,7 +41,7 @@ class Home extends React.Component {
   }
 }
 
- export function Page2({ params }) {
+function Page2({ params }) {
   return (
     <div>
       <ul>
@@ -54,35 +54,13 @@ class Home extends React.Component {
   );
 }
 
-class Page1 extends React.Component {
-  constructor(props) {
-    super(props);
-    this.updateUser = this.updateUser.bind(this);
-  }
-
-  updateUser(e) {
-    const event = e.nativeEvent;
-    const newUser = event.target[0].value;
-    // const newState = Object.assign({}, this.state, { UserName: newUser });
-    // this.setState(newState);
-
-    // call updateUsername action passed down from Reux.
-    // this.props.updateUsername(newUser);
-
-    //go to next page
-    // this.props.history.push(`/page2/${newUser}`);
-  }
-
-  render() {
-    return (
-      <div>
-        <ul>
-          <li><Link to="/home">Home</Link></li>
-        </ul>
-        <InputName onclick={this.updateUser} />
-      </div>
-    );
-  }
+const Page1 = (props) => {
+  console.log('Page1 props', props);
+  return (
+    <div>
+      <InputName updateUserName={props.updateUserName} User={props.reduxStore.username} />
+    </div>
+  );
 }
         //
         // <InputName onclick={this.updateUser} User={this.state.UserName} />

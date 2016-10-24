@@ -1,7 +1,7 @@
 // action creator
-export function updateUserName(username) {
+export function updateUserName(payload) {
   return {
     type: 'UPDATE_USERNAME',
-    username,
+    payload,
   };
 }

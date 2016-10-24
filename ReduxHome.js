@@ -6,7 +6,7 @@ import { Home } from './components';
 // map redux state to react
 const mapStateToProps = (reduxStore) => {
   return {
-    reduxStore,
+    reduxStore: reduxStore.user,
   }
 }
 

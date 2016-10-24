@@ -5,10 +5,12 @@ import { routerReducer } from 'react-router-redux';
 const initialState = {};
 
 // reducer
-function userReducer(state = initialState, action) {
+function user(state = initialState, action) {
   switch(action.type) {
     case 'UPDATE_USERNAME': {
-      return Object.assign({}, state, { username: action.username });
+      const event = action.payload.nativeEvent;
+      const newUser = event.target[0].value;
+      return Object.assign({}, state, { username: newUser });
     }
 
     default:
@@ -16,6 +18,6 @@ function userReducer(state = initialState, action) {
   }
 }
 
-const userReducers = combineReducers({ userReducer, routing: routerReducer });
+const userReducers = combineReducers({ user, routing: routerReducer });
 
 export default userReducers;
