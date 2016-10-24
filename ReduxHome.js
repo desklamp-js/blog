@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { updateUserNameAction } from './actionCreators';
+import { updateUserName } from './actionCreators';
 import { Home } from './components';
 
 // map redux state to react

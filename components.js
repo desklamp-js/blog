@@ -1,14 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-function InputName({ updateUserName, User }) {
+function InputName({ updateUserName, User, history }) {
+
+  function handleClick(event) {
+    event.preventDefault();
+    updateUserName(event);
+    history.push('/page2');
+  }
+
   return (
     <div>
-      <form onSubmit={(e) => { e.preventDefault(); updateUserName(e) }}>
+      <form onSubmit={(e) => { handleClick(e) }}>
         <input type="text" placeholder="Enter your Name" />
         <button type="submit">Submit</button>
       </form>
-      <p>{User}</p>
     </div>
   );
 }
@@ -16,53 +22,38 @@ function InputName({ updateUserName, User }) {
 function Root() {
   return (
     <div>
-      <h1>Root it!</h1>
+      <p>Hello and Welcome to the Demo</p>
     </div>
   );
 }
 
-class Home extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    console.log('home props', this.props);
-    return (
-      <div>
-        <ul>
-          <li><Link to="/home">Home</Link></li>
-          <li><Link to="/page1">Page 1</Link></li>
-        </ul>
-        <div>Welcome to the home demo</div>
-        {React.cloneElement(this.props.children, this.props)}
-      </div>
-    );
-  }
-}
-
-function Page2({ params }) {
+function Home(props) {
   return (
     <div>
       <ul>
         <li><Link to="/home">Home</Link></li>
         <li><Link to="/page1">Page 1</Link></li>
       </ul>
-      <h1>This is a parameter passed by the previous route</h1>
-      <p>{params.user}</p>
+      {React.cloneElement(props.children, props)}
     </div>
   );
 }
 
-const Page1 = (props) => {
-  console.log('Page1 props', props);
+function Page2(props) {
   return (
     <div>
-      <InputName updateUserName={props.updateUserName} User={props.reduxStore.username} />
+      <h1>This is a parameter passed by the previous route</h1>
+      <p>{props.reduxStore.username}</p>
     </div>
   );
 }
-        //
-        // <InputName onclick={this.updateUser} User={this.state.UserName} />
+
+function Page1(props) {
+  return (
+    <div>
+      <InputName updateUserName={props.updateUserName} User={props.reduxStore.username} history={props.history} />
+    </div>
+  );
+}
 
 module.exports = { Home, InputName, Page2, Page1, Root };
