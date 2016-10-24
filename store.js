@@ -7,7 +7,7 @@ import userReducers from './reducers';
 
 // default state of entire application
 const defaultState = {
-  user: {
+  routing: {
     username: '',
   },
 };
